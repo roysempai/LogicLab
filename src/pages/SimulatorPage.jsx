@@ -6,7 +6,8 @@ import { ReactFlowProvider } from '@xyflow/react';
 import GateLibrary from '../components/GateLibrary.jsx';
 import CircuitCanvas from '../components/CircuitCanvas.jsx';
 import TruthTablePanel from '../components/TruthTablePanel.jsx';
-import BooleanExpressionPanel from '../components/BooleanExpressionPanel.jsx';
+import ExpressionBuilder from '../components/ExpressionBuilder.jsx';
+import SimplifierPanel from '../components/SimplifierPanel.jsx';
 import Toolbar from '../components/Toolbar.jsx';
 import useCircuitStore from '../store/circuitStore.js';
 
@@ -55,12 +56,15 @@ const SimulatorPage = () => {
           </div>
 
           {/* Right: Output Panel */}
-          <div className="output-panel" style={{ width: 300, flexShrink: 0 }}>
-            {/* Boolean Expression */}
-            <BooleanExpressionPanel />
+          <div className="output-panel" style={{ width: 310, flexShrink: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            {/* Boolean Expression Builder (tabbed: Build | Derive) */}
+            <ExpressionBuilder />
+
+            {/* Simplifier */}
+            <SimplifierPanel />
 
             {/* Divider */}
-            <div style={{ height: 1, background: '#1A1A1A', margin: '0 14px' }} />
+            <div style={{ height: 1, background: '#1A1A1A', margin: '0 14px', flexShrink: 0 }} />
 
             {/* Truth Table */}
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
@@ -81,11 +85,11 @@ const SimulatorPage = () => {
           flexShrink: 0,
         }}>
           <StatusItem label="Simulation" value="Real-time" color="#00FF88" />
-          <StatusItem label="Inputs" value="Max 5" color="#3B82F6" />
-          <StatusItem label="Phase" value="1 — Core" color="#8B5CF6" />
+          <StatusItem label="ICs" value="4 types" color="#06B6D4" />
+          <StatusItem label="Phase" value="2 — IC + Simplifier" color="#8B5CF6" />
           <div style={{ flex: 1 }} />
           <span style={{ fontSize: 10, color: '#1E1E1E' }}>
-            LogicLab v1.0 — Digital Logic Circuit Simulator
+            LogicLab v2.0 — Digital Logic Circuit Simulator
           </span>
         </div>
       </div>

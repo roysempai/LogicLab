@@ -59,6 +59,14 @@ function deriveExpression(nodeId, nodeMap, reverseMap, visited = new Set()) {
     return label;
   }
 
+  // IC components — describe them symbolically
+  const IC_EXPRS = {
+    HALF_ADDER: (subs) => `HA(${subs.join(', ')})`,
+    FULL_ADDER: (subs) => `FA(${subs.join(', ')})`,
+    MUX_2_1:   (subs) => `MUX(${subs.join(', ')})`,
+    D_FLIPFLOP: (subs) => `DFF(${subs.join(', ')})`,
+  };
+
   const sources = reverseMap[nodeId] || [];
 
   if (sources.length === 0) {
@@ -72,7 +80,9 @@ function deriveExpression(nodeId, nodeMap, reverseMap, visited = new Set()) {
 
   let expr;
 
-  if (type === 'NOT') {
+  if (IC_EXPRS[type]) {
+    expr = IC_EXPRS[type](subExprs);
+  } else if (type === 'NOT') {
     expr = `¬(${subExprs[0]})`;
   } else if (type === 'OUTPUT' || type === 'BUFFER') {
     expr = subExprs[0] || '?';

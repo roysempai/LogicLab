@@ -10,6 +10,7 @@ const Toolbar = ({ onGoHome }) => {
     saveCircuit, loadCircuit,
     history, future,
     nodes,
+    expressionInput, simplifyCurrentExpression,
   } = useCircuitStore();
 
   const fileInputRef = useRef(null);
@@ -85,6 +86,20 @@ const Toolbar = ({ onGoHome }) => {
         <TrashIcon /> Clear
       </button>
 
+      <div className="toolbar-divider" />
+
+      {/* Simplify */}
+      <button
+        id="btn-simplify-toolbar"
+        className="toolbar-btn"
+        onClick={() => simplifyCurrentExpression(expressionInput)}
+        disabled={!expressionInput.trim()}
+        title="Simplify the current Boolean expression"
+        style={{ color: '#06B6D4' }}
+      >
+        <SimplifyIcon /> Simplify
+      </button>
+
       {/* Spacer */}
       <div style={{ flex: 1 }} />
 
@@ -142,6 +157,12 @@ const LoadIcon = () => (
 const TrashIcon = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
     <path d="M2.5 4h9M5.5 4V3a.5.5 0 01.5-.5h2a.5.5 0 01.5.5v1M4 4l.8 7h4.4L10 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+const SimplifyIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <path d="M2 4h4M2 7h6M2 10h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+    <path d="M10 4l2 3-2 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 

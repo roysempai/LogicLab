@@ -19,19 +19,22 @@ import {
 } from './gates/GateNode.jsx';
 import InputNode from './gates/InputNode.jsx';
 import OutputNode from './gates/OutputNode.jsx';
+import ICNode from './gates/ICNode.jsx';
 import CustomEdge from './CustomEdge.jsx';
+import { ALL_IC_TYPES } from './gates/icCatalog.js';
 
 // Register custom node types
 const nodeTypes = {
-  andNode:   AndGateNode,
-  orNode:    OrGateNode,
-  notNode:   NotGateNode,
-  nandNode:  NandGateNode,
-  norNode:   NorGateNode,
-  xorNode:   XorGateNode,
-  xnorNode:  XnorGateNode,
-  inputNode: InputNode,
+  andNode:    AndGateNode,
+  orNode:     OrGateNode,
+  notNode:    NotGateNode,
+  nandNode:   NandGateNode,
+  norNode:    NorGateNode,
+  xorNode:    XorGateNode,
+  xnorNode:   XnorGateNode,
+  inputNode:  InputNode,
   outputNode: OutputNode,
+  icNode:     ICNode,
 };
 
 const edgeTypes = {
@@ -40,15 +43,16 @@ const edgeTypes = {
 
 // Map gate type string → node type key
 const GATE_TYPE_MAP = {
-  AND:    'andNode',
-  OR:     'orNode',
-  NOT:    'notNode',
-  NAND:   'nandNode',
-  NOR:    'norNode',
-  XOR:    'xorNode',
-  XNOR:   'xnorNode',
-  INPUT:  'inputNode',
-  OUTPUT: 'outputNode',
+  AND:         'andNode',
+  OR:          'orNode',
+  NOT:         'notNode',
+  NAND:        'nandNode',
+  NOR:         'norNode',
+  XOR:         'xorNode',
+  XNOR:        'xnorNode',
+  INPUT:       'inputNode',
+  OUTPUT:      'outputNode',
+  ...Object.fromEntries(ALL_IC_TYPES.map(type => [type, 'icNode'])),
 };
 
 // Input label counter
@@ -110,9 +114,15 @@ const CircuitCanvas = () => {
     addNode(newNode);
   }, [screenToFlowPosition, addNode]);
 
-  // Color edges based on signal value
+  // Color edges based on signal value (handles IC multi-output objects)
   const styledEdges = edges.map(edge => {
-    const isActive = nodeOutputs[edge.source] === 1;
+    const raw = nodeOutputs[edge.source];
+    let isActive = false;
+    if (raw !== null && raw !== undefined && typeof raw === 'object') {
+      isActive = raw[edge.sourceHandle] === 1;
+    } else {
+      isActive = raw === 1;
+    }
     return {
       ...edge,
       type: 'custom',
@@ -161,6 +171,7 @@ const CircuitCanvas = () => {
           nodeColor={(n) => {
             if (n.type === 'inputNode') return '#1E1A00';
             if (n.type === 'outputNode') return '#001A0A';
+            if (n.type === 'icNode') return '#001A20';
             return '#1A1A2A';
           }}
           nodeStrokeColor="#333333"
@@ -185,7 +196,7 @@ const CircuitCanvas = () => {
             Drag gates from the library to begin
           </div>
           <div style={{ fontSize: 12, color: '#1E1E1E', marginTop: 4 }}>
-            Connect wires by dragging between handles
+            Or type a Boolean expression and click Build Circuit →
           </div>
         </div>
       )}
