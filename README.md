@@ -2,7 +2,15 @@
 
 A web-based digital logic circuit simulator built with React, Vite, and Tailwind CSS. This application allows users to build and test digital logic circuits in a visual, interactive environment. It features a drag-and-drop interface, real-time simulation, automatic generation of truth tables and Boolean expressions, and advanced tools for expression simplification and circuit generation.
 
-![Digital Logic Simulator Screenshot](https://i.imgur.com/your-screenshot.png)  <!-- It's recommended to replace this with an actual screenshot -->
+## Live Demo
+
+Check out the live demo [here](https://logicsimplified.netlify.app/).
+
+## Screenshots
+
+| Landing Page | Simulator Page |
+| :---: | :---: |
+| ![Landing Page](https://i.imgur.com/1Z2j3w0.png) | ![Simulator Page](https://i.imgur.com/6y4Q9Z2.png) |
 
 ## Features
 
@@ -32,11 +40,11 @@ A web-based digital logic circuit simulator built with React, Vite, and Tailwind
 *   Node.js (v18.x or later)
 *   npm or yarn
 
-### Installation
+### Installation & Setup
 
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/your-username/digital-logic-simulator.git
+    git clone https://github.com/roysempai/LogicLab
     ```
 2.  Navigate to the project directory:
     ```bash
@@ -73,10 +81,12 @@ The application will be available at `http://localhost:5173`.
 ├── assets/         # Static assets
 ├── components/     # Reusable React components
 │   ├── gates/      # Components for logic gates and ICs
-│   ├── ExpressionBuilder.jsx
-│   ├── SimplifierPanel.jsx
+│   ├── BooleanExpressionPanel.jsx
 │   ├── CircuitCanvas.jsx
+│   ├── CustomEdge.jsx
+│   ├── ExpressionBuilder.jsx
 │   ├── GateLibrary.jsx
+│   ├── SimplifierPanel.jsx
 │   ├── Toolbar.jsx
 │   └── TruthTablePanel.jsx
 ├── engine/         # Core logic for simulation
@@ -93,6 +103,21 @@ The application will be available at `http://localhost:5173`.
     └── circuitStore.js
 ```
 
+## Core Engine
+
+The `engine` directory contains the core logic for the simulator. Here's a brief overview of each module:
+
+*   `expressionParser.js`: Parses Boolean expressions into an Abstract Syntax Tree (AST).
+*   `astToCircuit.js`: Converts the AST into a circuit graph compatible with React Flow.
+*   `booleanExpression.js`: Derives Boolean expressions from the circuit graph.
+*   `logicEngine.js`: Simulates the circuit and computes the output values.
+*   `truthTableGenerator.js`: Generates a truth table for the circuit.
+*   `booleanSimplifier.js`: Simplifies Boolean expressions using algebraic laws.
+
 ## Contributing
 
 Contributions are welcome! Please feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
