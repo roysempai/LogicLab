@@ -2,16 +2,6 @@
 
 A web-based digital logic circuit simulator built with React, Vite, and Tailwind CSS. This application allows users to build and test digital logic circuits in a visual, interactive environment. It features a drag-and-drop interface, real-time simulation, automatic generation of truth tables and Boolean expressions, and advanced tools for expression simplification and circuit generation.
 
-## Live Demo
-
-Check out the live demo [here](https://logicsimplified.netlify.app/).
-
-## Screenshots
-
-| Landing Page | Simulator Page |
-| :---: | :---: |
-| ![Landing Page](https://i.imgur.com/1Z2j3w0.png) | ![Simulator Page](https://i.imgur.com/6y4Q9Z2.png) |
-
 ## Features
 
 *   **Interactive Circuit Canvas**: Build circuits by dragging gates from the library and connecting them.
